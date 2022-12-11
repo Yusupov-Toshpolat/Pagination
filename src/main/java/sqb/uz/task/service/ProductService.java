@@ -10,12 +10,14 @@ import sqb.uz.task.dto.ResponseDTO;
 import sqb.uz.task.model.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductService {
     ResponseDTO<ProductDTO> add(ProductDTO productDTO);
     ResponseDTO<ProductDTO> findById(Long id);
     ResponseDTO<ProductDTO> update(ProductDTO productDTO);
     ResponseDTO<ProductDTO> deleteById(Long id);
-    ResponseDTO<Page<ProductDTO>> pagination(Pagination pagination);
-//    ResponseDTO<List<Product>> search();
+
+    ResponseDTO<List<Map<String, Object>>> byParam(Pagination pagination);
+
 }

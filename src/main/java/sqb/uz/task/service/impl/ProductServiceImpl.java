@@ -1,7 +1,6 @@
 package sqb.uz.task.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
@@ -11,15 +10,12 @@ import sqb.uz.task.dto.search.Filter;
 import sqb.uz.task.dto.search.Pagination;
 import sqb.uz.task.dto.ProductDTO;
 import sqb.uz.task.dto.ResponseDTO;
-import sqb.uz.task.helper.AppMessages;
 import sqb.uz.task.mapper.ProductMapper;
 import sqb.uz.task.model.Product;
 import sqb.uz.task.repository.ProductRepository;
-import sqb.uz.task.repository.impl.ProductRepositoryImpl;
 import sqb.uz.task.repository.template.ProductJdbcTemplate;
 import sqb.uz.task.service.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,20 +32,18 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    private ProductRepositoryImpl repository;
-
-    @Autowired
     private ProductMapper productMapper;
 
     @Autowired
     private ProductJdbcTemplate jdbcTemplate;
 
+    @Override
     public ResponseDTO<List<Map<String, Object>>> byParam(Pagination pagination){
         try {
             return new ResponseDTO<>(OK, true, SUCCESS, jdbcTemplate.search(pagination));
         }catch (Exception e){
             log.error(e.getMessage());
-            return null;
+            return new ResponseDTO<>(ERROR, false, SEARCH_ERROR, null);
         }
     }
 
@@ -128,27 +122,6 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseDTO<>(OK, true, DELETE, productMapper.toDto(productOptional.get()));
     }
 
-    @Override
-    public ResponseDTO<Page<ProductDTO>> pagination(Pagination pagination) {
-        try {
-            Page<Product> data = repository.searchByParams(pagination);
-
-            return new ResponseDTO<>(OK, true, SUCCESS, data.map( p -> productMapper.toDto(p)));
-        }catch (Exception e){
-            log.error(e.getMessage());
-            return new ResponseDTO<>(ERROR, false, SEARCH_ERROR, null);
-        }
-    }
-
-//    @Override
-//    public ResponseDTO<List<Product>> search() {
-//        try {
-//            return new ResponseDTO<>(OK, true, SUCCESS, repository.search());
-//        }catch (Exception e){
-//            log.error(e.getMessage());
-//            return new ResponseDTO<>(ERROR, false, SEARCH_ERROR, null);
-//        }
-//    }
 
     private Product mapperForUpdate(Product old, ProductDTO newProduct){
         if (newProduct.getName() != null && !newProduct.getName().equals(old.getName()))

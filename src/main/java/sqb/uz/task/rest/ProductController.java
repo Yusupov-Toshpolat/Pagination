@@ -36,16 +36,8 @@ public class ProductController {
     public ResponseDTO<ProductDTO> deleteById(@PathVariable Long id){
         return productService.deleteById(id);
     }
-    @GetMapping("/by-page")
-    public ResponseDTO<Page<ProductDTO>> pagination(@RequestBody Pagination pagination){
-        return productService.pagination(pagination);
-    }
     @GetMapping("/by-param")
     public ResponseDTO<List<Map<String, Object>>> byParam(@RequestBody Pagination pagination){
         return productService.byParam(pagination);
     }
-//    @GetMapping("/search")
-//    public ResponseDTO<List<Product>> search(){
-//        return productService.search();
-//    }
 }
