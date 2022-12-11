@@ -2,11 +2,8 @@ package sqb.uz.task.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import sqb.uz.task.dto.search.Filter;
 import sqb.uz.task.dto.search.Pagination;
 import sqb.uz.task.dto.ProductDTO;
 import sqb.uz.task.dto.ResponseDTO;
@@ -58,7 +55,6 @@ public class ProductServiceImpl implements ProductService {
                             )));
         }catch (Exception e){
             log.error(e.getMessage());
-            log.error("Sho'tta");
             return ResponseDTO.<ProductDTO>builder()
                     .code(ERROR)
                     .success(false)
