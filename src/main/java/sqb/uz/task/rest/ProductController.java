@@ -24,18 +24,22 @@ public class ProductController {
     public ResponseDTO<ProductDTO> add(@RequestBody ProductDTO productDTO){
         return productService.add(productDTO);
     }
+
     @GetMapping("/{id}")
     public ResponseDTO<ProductDTO> findById(@PathVariable Long id){
         return productService.findById(id);
     }
+
     @PatchMapping("/update")
     public ResponseDTO<ProductDTO> update(@RequestBody ProductDTO productDTO){
         return productService.update(productDTO);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseDTO<ProductDTO> deleteById(@PathVariable Long id){
         return productService.deleteById(id);
     }
+
     @GetMapping("/by-param")
     public ResponseDTO<List<Map<String, Object>>> byParam(@RequestBody Pagination pagination){
         return productService.byParam(pagination);

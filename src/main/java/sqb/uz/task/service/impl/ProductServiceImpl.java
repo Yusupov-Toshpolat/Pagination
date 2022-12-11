@@ -128,13 +128,13 @@ public class ProductServiceImpl implements ProductService {
             old.setName(newProduct.getName());
         if (newProduct.getDescription() != null && !newProduct.getDescription().equals(old.getDescription()))
             old.setDescription(newProduct.getDescription());
-        if (newProduct.getPrice() != null && old.getPrice() == null || Double.compare(old.getPrice(), newProduct.getPrice()) != 0)
+        if (newProduct.getPrice() != null && old.getPrice() == null || !old.getPrice().equals(newProduct.getPrice()))
             old.setPrice(newProduct.getPrice());
         if (newProduct.getStatus() != null && old.getStatus() != newProduct.getStatus())
             old.setStatus(newProduct.getStatus());
-        if (newProduct.getDateCreated() != null && old.getDateCreated() == null || !old.getDateCreated().isEqual(newProduct.getDateCreated()))
+        if (newProduct.getDateCreated() != null && old.getDateCreated() == null || !old.getDateCreated().equals(newProduct.getDateCreated()))
             old.setDateCreated(newProduct.getDateCreated());
-        if (newProduct.getAmount() != null && old.getAmount() == null || Integer.compare(old.getAmount(), newProduct.getAmount()) != 0)
+        if (newProduct.getAmount() != null && old.getAmount() == null || !old.getAmount().equals(newProduct.getAmount()))
             old.setAmount(newProduct.getAmount());
 
         return old;

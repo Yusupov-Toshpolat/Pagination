@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -30,7 +31,7 @@ public class Product {
     private Double price;
 
     @Column(name = "date_created")
-    private LocalDate dateCreated;
+    private Date dateCreated;
 
     @Column(name = "status")
     private Boolean status;

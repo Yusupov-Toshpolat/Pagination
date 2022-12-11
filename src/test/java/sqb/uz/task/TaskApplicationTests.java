@@ -15,7 +15,7 @@ import sqb.uz.task.dto.ProductDTO;
 import sqb.uz.task.dto.ResponseDTO;
 import sqb.uz.task.model.Product;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,6 +31,8 @@ class TaskApplicationTests {
 	@Autowired
 	private MockMvc mockMvc;
 
+	public static Long productId;
+
 	@Test
 	@DisplayName("A")
 	void addProduct() throws Exception {
@@ -42,7 +44,7 @@ class TaskApplicationTests {
 		product.setPrice(8700D);
 		product.setStatus(true);
 		product.setAmount(35);
-		product.setDateCreated(LocalDate.of(2022, 12, 11));
+		product.setDateCreated(new Date());
 
 		String content = jsonMapper.writeValueAsString(product);
 
@@ -66,6 +68,8 @@ class TaskApplicationTests {
 		assertEquals(true, res.getSuccess());
 		assertNotNull(res.getData());
 
+		productId = res.getData().getId();
+
 	}
 
 	@Test
@@ -74,7 +78,7 @@ class TaskApplicationTests {
 
 		ObjectMapper jsonMapper = new ObjectMapper();
 
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/product/"+45)
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/product/"+productId)
 				.contentType("application/json");
 
 		String response = mockMvc.perform(requestBuilder)
@@ -100,7 +104,7 @@ class TaskApplicationTests {
 		ObjectMapper jsonMapper = new ObjectMapper();
 
 		ProductDTO productDTO = new ProductDTO();
-		productDTO.setId(45L);
+		productDTO.setId(productId);
 		productDTO.setStatus(false);
 		productDTO.setAmount(0);
 
@@ -123,7 +127,6 @@ class TaskApplicationTests {
 		ResponseDTO<ProductDTO> res = jsonMapper.readValue(response, new TypeReference<ResponseDTO<ProductDTO>>(){});
 
 		assertNotNull(res);
-		assertEquals(true, res.getSuccess());
 		assertNotNull(res.getData());
 	}
 
@@ -132,7 +135,7 @@ class TaskApplicationTests {
 	void deleteProductById() throws Exception{
 		ObjectMapper jsonMapper = new ObjectMapper();
 
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/product/delete/"+45)
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/product/delete/"+productId)
 				.contentType("application/json");
 
 		String response = mockMvc.perform(requestBuilder)

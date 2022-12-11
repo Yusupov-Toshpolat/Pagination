@@ -30,6 +30,8 @@ public class ProductJdbcTemplate {
             setSorting(queryConditions, pagination.getSorting());
         if (pagination.getPage() != null && pagination.getSize() != null)
             setPage(queryConditions, pagination.getPage(), pagination.getSize());
+        else
+            setPage(queryConditions, 0, 20);
         String queryStr = "SELECT * FROM " + tableName + queryConditions;
         log.info("QUERY {}", queryStr);
         List<Map<String, Object>> res = jdbcTemplate.queryForList(queryStr);

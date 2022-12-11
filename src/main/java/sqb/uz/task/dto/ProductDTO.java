@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,10 +15,8 @@ public class ProductDTO {
     private Long id;
     private String name;
     private String description;
-    @Min(value = 0, message = "A negative value")
     private Double price;
-    private LocalDate dateCreated;
+    private Date dateCreated;
     private Boolean status;
-    @Min(value = 0, message = "A negative value")
     private Integer amount;
 }
